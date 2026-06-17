@@ -1,0 +1,31 @@
+slides/agentic-codebase-todo/snippets/agentic-repeat/apps/server/src/module/todo/todo.reaction.define.ts
+  s_e0bfd9bb9f2a50::t_110804e5627fbd 12
+slides/agentic-codebase-todo/snippets/agentic-repeat/apps/server/src/module/notification/notification.reaction.define.ts
+  s_e0bfd9bb9f2a50::t_110804e5627fbd 1,12,14,16-20
+slides/agentic-codebase-todo/snippets/agentic-repeat/apps/server/src/module/todo-occurrence/todo-occurrence.reaction.define.ts
+  s_e0bfd9bb9f2a50::t_110804e5627fbd 2,11-15,17
+slides/agentic-codebase-todo/snippets/agentic-share/apps/server/src/module/module.reaction.define.md
+  s_e0bfd9bb9f2a50::t_cac80d16e33a9a 3,5,7,9,11-61
+slides/agentic-codebase-todo/snippets/agentic-share/apps/server/src/module/notification/notification.reaction.define.ts
+  s_e0bfd9bb9f2a50::t_110804e5627fbd 1,12,14,16-20
+slides/agentic-codebase-todo/snippets/agentic-repeat/apps/server/src/module/module.reaction.define.md
+  s_e0bfd9bb9f2a50::t_cac80d16e33a9a 3,5,7,9,11-61
+slides/agentic-codebase-todo/snippets/agentic-share/apps/server/src/module/todo/todo.reaction.define.ts
+  s_e0bfd9bb9f2a50::t_110804e5627fbd 12
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.8",
+  "base_commit_sha": "499f0737db575568d3c3f8e4ff6ac49afe5048ac",
+  "prompts": {},
+  "sessions": {
+    "s_e0bfd9bb9f2a50": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_12c78bb66ffeHbRPXUafwPqWzU",
+        "model": "gpt-5.5"
+      },
+      "human_author": "Kevin <kevin@sucasa.com.au>"
+    }
+  }
+}
