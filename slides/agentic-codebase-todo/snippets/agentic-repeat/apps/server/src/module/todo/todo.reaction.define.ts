@@ -9,7 +9,7 @@ import { TodoShared } from "./todo.event.define";
 export const NotifyTodoShare = Reaction.define({
   emits: [NotificationCreated, NotificationFailed],
   on: [TodoShared],
-  payload: Schema.Struct({
+  schema: Schema.Struct({
     message: Schema.optional(Schema.String),
     todoId: Schema.String,
     userId: Schema.String,
