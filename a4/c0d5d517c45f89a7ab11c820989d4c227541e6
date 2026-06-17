@@ -1,0 +1,23 @@
+package.json
+  s_e0bfd9bb9f2a50::t_61dd60f3671e59 6-8
+.github/workflows/deploy.yml
+  s_e0bfd9bb9f2a50::t_61dd60f3671e59 1-29
+package-lock.json
+  s_e0bfd9bb9f2a50::t_a83b6688b634f6 21-23,4897-4955
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.8",
+  "base_commit_sha": "a4c0d5d517c45f89a7ab11c820989d4c227541e6",
+  "prompts": {},
+  "sessions": {
+    "s_e0bfd9bb9f2a50": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_12c78bb66ffeHbRPXUafwPqWzU",
+        "model": "gpt-5.5"
+      },
+      "human_author": "Kevin <kevin@sucasa.com.au>"
+    }
+  }
+}
