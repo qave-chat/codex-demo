@@ -1,0 +1,15 @@
+{
+  "folders": [
+    {
+      "id": "f-ef13a1f8",
+      "name": "codex-demo",
+      "icon": {
+        "type": "color",
+        "value": "#c0392b"
+      }
+    }
+  ],
+  "assignments": {
+    "agentic-codebase-todo": "f-ef13a1f8"
+  }
+}

@@ -1,0 +1,619 @@
+<!-- ==================================================================
+     Agentic Codebase Slides · Qave
+     Landscape A4, Kami-inspired parchment deck.
+     ================================================================== -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="A talk deck on building an agentic codebase with backend flow, frontend machines, and local markdown plus lint contracts.">
+<meta name="keywords" content="agentic codebase, intents, events, reactions, state machines, lint">
+<meta name="generator" content="Kami">
+<title>Building an Agentic Codebase · Slides</title>
+<style>
+  @page {
+    size: A4 landscape;
+    margin: 0;
+    background: #f5f4ed;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --parchment:  #f5f4ed;
+    --ivory:      #faf9f5;
+    --near-black: #141413;
+    --dark-warm:  #3d3d3a;
+    --olive:      #504e49;
+    --stone:      #6b6a64;
+    --brand:      #1B365D;
+    --brand-tint: #EEF2F7;
+    --border:     #e8e6dc;
+    --border-soft:#e5e3d8;
+    --serif: Charter, Georgia, Palatino, "Times New Roman", serif;
+    --sans: var(--serif);
+    --mono: "JetBrains Mono", "SF Mono", Consolas, Monaco, monospace;
+  }
+
+  body {
+    background: var(--parchment);
+    color: var(--near-black);
+    font-family: var(--serif);
+  }
+
+  .slide {
+    width: 297mm;
+    height: 210mm;
+    padding: 18mm 22mm;
+    background: var(--parchment);
+    break-after: page;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+  .slide:last-child { break-after: auto; }
+
+  .cover {
+    display: grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    gap: 36pt;
+    align-items: center;
+  }
+  .cover .mark,
+  .eyebrow,
+  .footer-mark,
+  .page-num {
+    font-family: var(--mono);
+    text-transform: uppercase;
+    letter-spacing: 1.8pt;
+    color: var(--stone);
+  }
+  .cover .mark {
+    color: var(--brand);
+    font-size: 10pt;
+    margin-bottom: 22pt;
+  }
+  .cover h1 {
+    font-size: 48pt;
+    font-weight: 500;
+    line-height: 1.04;
+    letter-spacing: -1.3pt;
+    margin-bottom: 16pt;
+  }
+  .cover .sub {
+    font-size: 16pt;
+    line-height: 1.42;
+    color: var(--olive);
+    max-width: 35ch;
+  }
+  .cover .line {
+    width: 64pt;
+    height: 2pt;
+    background: var(--brand);
+    margin: 22pt 0 16pt;
+  }
+  .cover .meta {
+    font-family: var(--mono);
+    font-size: 9pt;
+    letter-spacing: 0.8pt;
+    color: var(--stone);
+  }
+  .cover-visual { display: flex; align-items: center; justify-content: center; }
+
+  .slide-head { margin-bottom: 8pt; }
+  .eyebrow { font-size: 9pt; }
+  .slide-title {
+    font-size: 36pt;
+    font-weight: 500;
+    line-height: 1.1;
+    letter-spacing: -0.6pt;
+    max-width: 24ch;
+    margin: 5pt 0 24pt;
+  }
+  .body-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 26pt;
+    flex: 1;
+  }
+  .body-third {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18pt;
+    flex: 1;
+  }
+  .body-single { max-width: 75ch; }
+  .claim {
+    font-size: 16.5pt;
+    line-height: 1.45;
+    color: var(--dark-warm);
+    margin-bottom: 14pt;
+  }
+  .hl { color: var(--brand); }
+  ul.pts { list-style: none; }
+  ul.pts li {
+    font-size: 12.2pt;
+    line-height: 1.48;
+    color: var(--dark-warm);
+    padding-left: 14pt;
+    position: relative;
+    margin-bottom: 8pt;
+  }
+  ul.pts li::before {
+    content: "-";
+    position: absolute;
+    left: 0;
+    color: var(--brand);
+  }
+  .callout {
+    border-left: 2pt solid var(--brand);
+    padding: 8pt 0 8pt 15pt;
+    font-size: 14pt;
+    line-height: 1.5;
+    color: var(--olive);
+    margin-top: 6pt;
+  }
+  .page-num {
+    position: absolute;
+    bottom: 10mm;
+    right: 22mm;
+    font-size: 9pt;
+    font-variant-numeric: tabular-nums;
+  }
+  .footer-mark {
+    position: absolute;
+    bottom: 10mm;
+    left: 22mm;
+    font-size: 9pt;
+  }
+  .card {
+    background: var(--ivory);
+    border: 0.6pt solid var(--border);
+    border-radius: 8pt;
+    padding: 15pt 17pt;
+  }
+  .card h3 {
+    font-size: 15pt;
+    font-weight: 500;
+    line-height: 1.25;
+    margin-bottom: 9pt;
+  }
+  .card p {
+    font-size: 11.2pt;
+    line-height: 1.45;
+    color: var(--olive);
+  }
+  .compare {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12pt;
+  }
+  .compare-card {
+    min-height: 238pt;
+    background: var(--ivory);
+    border: 0.6pt solid var(--border);
+    border-radius: 8pt;
+    padding: 15pt 16pt;
+  }
+  .compare-card .label {
+    font-family: var(--mono);
+    font-size: 8.5pt;
+    letter-spacing: 1.2pt;
+    text-transform: uppercase;
+    color: var(--stone);
+    margin-bottom: 8pt;
+  }
+  .compare-card h3 {
+    font-size: 18pt;
+    font-weight: 500;
+    line-height: 1.22;
+    margin-bottom: 10pt;
+  }
+  .compare-card p,
+  .compare-card li {
+    font-size: 11.5pt;
+    line-height: 1.45;
+    color: var(--dark-warm);
+  }
+  .compare-card.agentic {
+    border-color: #D0DCE9;
+    background: #faf9f5;
+  }
+  .code-card {
+    background: var(--ivory);
+    border: 0.6pt solid var(--border);
+    border-radius: 7pt;
+    padding: 13pt 15pt;
+    font-family: var(--mono);
+    font-size: 9pt;
+    line-height: 1.48;
+    color: var(--near-black);
+    white-space: pre-wrap;
+    overflow: hidden;
+  }
+  .code-card .k { color: var(--brand); }
+  .code-card .c { color: var(--stone); }
+  .mini-label {
+    font-family: var(--mono);
+    font-size: 8.5pt;
+    letter-spacing: 1.1pt;
+    text-transform: uppercase;
+    color: var(--stone);
+    margin-bottom: 7pt;
+  }
+  .flow-row {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 8pt;
+    margin-top: 13pt;
+  }
+  .flow-box {
+    background: var(--ivory);
+    border: 0.6pt solid var(--border);
+    border-radius: 7pt;
+    padding: 12pt 8pt;
+    text-align: center;
+    font-family: var(--mono);
+    font-size: 8.5pt;
+    line-height: 1.35;
+    color: var(--dark-warm);
+  }
+  .flow-box.brand {
+    background: var(--brand-tint);
+    border-color: #D0DCE9;
+    color: var(--brand);
+  }
+  .metrics {
+    display: flex;
+    gap: 18pt;
+    margin-top: 18pt;
+    padding-top: 12pt;
+    border-top: 0.3pt dotted var(--border);
+  }
+  .metric { flex: 1; display: flex; gap: 8pt; align-items: baseline; }
+  .metric .v {
+    font-size: 30pt;
+    font-weight: 500;
+    color: var(--brand);
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+  }
+  .metric .l {
+    font-size: 10pt;
+    line-height: 1.35;
+    color: var(--olive);
+  }
+  .ending {
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+  .ending h1 {
+    font-size: 50pt;
+    font-weight: 500;
+    letter-spacing: -0.7pt;
+    line-height: 1.08;
+    margin-bottom: 14pt;
+  }
+  .ending .sub {
+    font-size: 17pt;
+    line-height: 1.45;
+    color: var(--olive);
+    max-width: 48ch;
+  }
+  .ending .line {
+    width: 64pt;
+    height: 1.5pt;
+    background: var(--brand);
+    margin: 22pt auto;
+  }
+</style>
+</head>
+<body>
+
+<section class="slide cover">
+  <div>
+    <div class="mark">Qave · Agentic Codebase</div>
+    <h1>Building an Agentic Codebase</h1>
+    <div class="sub">A codebase where agents work inside protocols: explicit intent, observable effects, modeled UI, and enforceable architecture.</div>
+    <div class="line"></div>
+    <div class="meta">Talk deck · A4 landscape · 12 slides</div>
+  </div>
+  <div class="cover-visual">
+    <svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg" style="width: 230pt;">
+      <circle cx="150" cy="150" r="120" fill="none" stroke="#e8e6dc" stroke-width="1"/>
+      <circle cx="150" cy="150" r="84" fill="none" stroke="#e8e6dc" stroke-width="1"/>
+      <circle cx="150" cy="150" r="46" fill="#EEF2F7" stroke="#1B365D" stroke-width="1.3"/>
+      <path d="M 150 30 A 120 120 0 0 1 270 150" fill="none" stroke="#1B365D" stroke-width="2.2" stroke-linecap="round"/>
+      <path d="M 270 150 A 120 120 0 0 1 150 270" fill="none" stroke="#6b6a64" stroke-width="1.2" stroke-linecap="round"/>
+      <path d="M 150 270 A 120 120 0 0 1 30 150" fill="none" stroke="#6b6a64" stroke-width="1.2" stroke-linecap="round"/>
+      <path d="M 30 150 A 120 120 0 0 1 150 30" fill="none" stroke="#6b6a64" stroke-width="1.2" stroke-linecap="round"/>
+      <text x="150" y="145" text-anchor="middle" font-size="13" font-weight="500" fill="#141413" font-family="Charter, Georgia, serif">Agentic</text>
+      <text x="150" y="164" text-anchor="middle" font-size="8" fill="#1B365D" font-family="monospace" letter-spacing="2">CODEBASE</text>
+    </svg>
+  </div>
+  <div class="page-num">01</div>
+  <div class="footer-mark">Agentic Codebase</div>
+</section>
+
+<section class="slide">
+  <div class="slide-head"><span class="eyebrow">01 · Thesis</span></div>
+  <div class="slide-title">Agent reliability comes from protocols, not prompts</div>
+  <div class="body-third">
+    <div class="card">
+      <h3>Backend flow</h3>
+      <p><span class="hl">intent -&gt; event -&gt; reaction</span> turns work into durable records instead of hidden side effects.</p>
+    </div>
+    <div class="card">
+      <h3>Frontend machines</h3>
+      <p><span class="hl">events -&gt; states -&gt; snapshots</span> make UI behavior explicit instead of scattered hook state.</p>
+    </div>
+    <div class="card">
+      <h3>Local governance</h3>
+      <p><span class="hl">*.md + *.lint.ts</span> puts architecture next to code, then makes drift mechanically visible.</p>
+    </div>
+  </div>
+  <div class="callout">The goal is not a smarter agent. The goal is a codebase that makes the right edit obvious and the wrong edit hard.</div>
+  <div class="page-num">02</div>
+  <div class="footer-mark">Agentic Codebase</div>
+</section>
+
+<section class="slide">
+  <div class="slide-head"><span class="eyebrow">02 · Backend Comparison</span></div>
+  <div class="slide-title">Service/repo/queue hides the story; flow records it</div>
+  <div class="compare">
+    <div class="compare-card">
+      <div class="label">Current shape</div>
+      <h3>Imperative call chain</h3>
+      <ul class="pts">
+        <li>Service mutates domain tables.</li>
+        <li>Repository owns persistence details.</li>
+        <li>Queue publishes follow-up work.</li>
+        <li>Audit trail is reconstructed after the fact.</li>
+      </ul>
+    </div>
+    <div class="compare-card agentic">
+      <div class="label">Agentic shape</div>
+      <h3>Typed facts and bounded automation</h3>
+      <ul class="pts">
+        <li>Intent captures the requested change.</li>
+        <li>Event captures what happened.</li>
+        <li>Reaction captures async follow-up policy.</li>
+        <li>Runtime owns status, retries, timeout, TTL.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="page-num">03</div>
+  <div class="footer-mark">Agentic Codebase</div>
+</section>
+
+<section class="slide">
+  <div class="slide-head"><span class="eyebrow">03 · Backend Code Card</span></div>
+  <div class="slide-title">The domain handler returns facts, not side effects</div>
+  <div class="body-grid">
+    <div>
+      <div class="mini-label">Before · service/repo/queue</div>
+      <pre class="code-card"><span class="k">await</span> TaskService.createTask(input)
+
+<span class="c">// inside the service</span>
+<span class="k">await</span> taskRepo.insert(input)
+<span class="k">await</span> queue.publish("task.created", {
+  taskId: input.taskId,
+})
+<span class="k">await</span> auditRepo.insert(...)</pre>
+    </div>
+    <div>
+      <div class="mini-label">After · intent/event/reaction</div>
+      <pre class="code-card"><span class="k">export const</span> CreateTaskLive = Intent.layer(
+  CreateTaskIntent,
+  Effect.fn(<span class="k">function*</span> (intent) {
+    <span class="k">return</span> [TaskCreated({
+      taskId: intent.payload.taskId,
+      title: intent.payload.title,
+    })]
+  }),
+)</pre>
+    </div>
+  </div>
+  <div class="callout">For agents, the primitive is smaller: add the command, emit the fact, declare the follow-up.</div>
+  <div class="page-num">04</div>
+  <div class="footer-mark">Agentic Codebase</div>
+</section>
+
+<section class="slide">
+  <div class="slide-head"><span class="eyebrow">04 · Runtime</span></div>
+  <div class="slide-title">The dangerous work moves into one runtime</div>
+  <p class="claim">The flow runtime makes orchestration boring: lock, decode, process, persist, enqueue, complete or fail.</p>
+  <div class="flow-row">
+    <div class="flow-box brand">accept<br>intent</div>
+    <div class="flow-box">lock row<br>decode payload</div>
+    <div class="flow-box">run typed<br>handler</div>
+    <div class="flow-box brand">persist<br>events</div>
+    <div class="flow-box">enqueue<br>reactions</div>
+  </div>
+  <div class="metrics">
+    <div class="metric"><div class="v">1</div><div class="l">place for idempotency and intent status</div></div>
+    <div class="metric"><div class="v">3</div><div class="l">reaction bounds: retry, timeout, TTL</div></div>
+    <div class="metric"><div class="v">0</div><div class="l">runtime surprise cycles after boot-time registry checks</div></div>
+  </div>
+  <div class="page-num">05</div>
+  <div class="footer-mark">Agentic Codebase</div>
+</section>
+
+<section class="slide">
+  <div class="slide-head"><span class="eyebrow">05 · Frontend Comparison</span></div>
+  <div class="slide-title">Hook state describes implementation; machines describe behavior</div>
+  <div class="compare">
+    <div class="compare-card">
+      <div class="label">Current shape</div>
+      <h3>useState, useQuery, effects</h3>
+      <ul class="pts">
+        <li>Status is spread across booleans.</li>
+        <li>Effects encode lifecycle by convention.</li>
+        <li>Invalid combinations are easy to render.</li>
+        <li>Agents must edit data, state, and JSX together.</li>
+      </ul>
+    </div>
+    <div class="compare-card agentic">
+      <div class="label">Agentic shape</div>
+      <h3>useMachine and typed events</h3>
+      <ul class="pts">
+        <li>State names are the UI contract.</li>
+        <li>Events are the only transition surface.</li>
+        <li>Snapshots are safe to render.</li>
+        <li>Pages send events; pure UI receives props.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="page-num">06</div>
+  <div class="footer-mark">Agentic Codebase</div>
+</section>
+
+<section class="slide">
+  <div class="slide-head"><span class="eyebrow">06 · Frontend Code Card</span></div>
+  <div class="slide-title">A machine turns async outcomes into named events</div>
+  <div class="body-grid">
+    <div>
+      <div class="mini-label">Before · scattered state</div>
+      <pre class="code-card"><span class="k">const</span> [range, setRange] = useState("24h")
+<span class="k">const</span> [search, setSearch] = useState("")
+<span class="k">const</span> [error, setError] = useState(null)
+
+<span class="k">const</span> stats = useQuery(["stats", range], fetchStats)
+<span class="k">const</span> items = useQuery(["items", range, search], fetchItems)
+
+useEffect(() =&gt; {
+  <span class="k">if</span> (stats.error || items.error) setError("Failed")
+}, [stats.error, items.error])</pre>
+    </div>
+    <div>
+      <div class="mini-label">After · machine contract</div>
+      <pre class="code-card"><span class="k">type</span> FlowDashboardEvent =
+  | { type: "ACCESS_ALLOWED" }
+  | { type: "ACCESS_FORBIDDEN" }
+  | { type: "STATS_LOADED"; stats: FlowStats }
+  | { type: "ITEMS_LOADED"; items: FlowItem[] }
+  | { type: "FAILED"; error: string }
+  | { type: "RANGE_CHANGED"; range: FlowRangePreset }</pre>
+    </div>
+  </div>
+  <div class="page-num">07</div>
+  <div class="footer-mark">Agentic Codebase</div>
+</section>
+
+<section class="slide">
+  <div class="slide-head"><span class="eyebrow">07 · Frontend Boundary</span></div>
+  <div class="slide-title">The page wires behavior; the UI stays pure</div>
+  <div class="body-grid">
+    <div>
+      <p class="claim">Qave's flow dashboard already makes async results explicit by sending machine events like <span class="hl">STATS_LOADED</span>, <span class="hl">ITEMS_LOADED</span>, and <span class="hl">FAILED</span>.</p>
+      <ul class="pts">
+        <li>Next step: move polling and access checks into invoked actors.</li>
+        <li>XState cancellation replaces ad-hoc cancelled booleans.</li>
+        <li>The UI remains Storybook-able because it receives props only.</li>
+      </ul>
+    </div>
+    <pre class="code-card">&lt;FlowDashboardView
+  stats={snapshot.context.stats}
+  items={snapshot.context.items}
+  range={snapshot.context.range}
+  onRangeChange={(range) =&gt;
+    actor.send({ type: "RANGE_CHANGED", range })
+  }
+/&gt;</pre>
+  </div>
+  <div class="page-num">08</div>
+  <div class="footer-mark">Agentic Codebase</div>
+</section>
+
+<section class="slide">
+  <div class="slide-head"><span class="eyebrow">08 · Governance Comparison</span></div>
+  <div class="slide-title">Docs plus lint says no; paired contracts explain why</div>
+  <div class="compare">
+    <div class="compare-card">
+      <div class="label">Current shape</div>
+      <h3>docs/ and global lint</h3>
+      <ul class="pts">
+        <li>Architecture guidance is far from the edited file.</li>
+        <li>Lint failures often arrive after the edit.</li>
+        <li>Agents must discover which rule matters.</li>
+        <li>Judgment calls live in human memory.</li>
+      </ul>
+    </div>
+    <div class="compare-card agentic">
+      <div class="label">Agentic shape</div>
+      <h3>nearby *.md and *.lint.ts</h3>
+      <ul class="pts">
+        <li>Markdown states the local contract.</li>
+        <li>Lint stub lists enforceable rule names.</li>
+        <li>Central plugin enforces behavior once.</li>
+        <li>Agents know what to read before editing.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="page-num">09</div>
+  <div class="footer-mark">Agentic Codebase</div>
+</section>
+
+<section class="slide">
+  <div class="slide-head"><span class="eyebrow">09 · Governance Code Card</span></div>
+  <div class="slide-title">The convention has a human face and a machine face</div>
+  <div class="body-grid">
+    <div>
+      <div class="mini-label">modules.ui.md</div>
+      <pre class="code-card">*.ui.tsx defines pure presentational UI.
+
+No API clients.
+No routers.
+No machines.
+No effects.
+
+Data and callbacks come from props.</pre>
+    </div>
+    <div>
+      <div class="mini-label">modules.ui.lint.ts</div>
+      <pre class="code-card"><span class="k">export const</span> uiRules = [
+  "presentational-only",
+  "props-in-jsx-out",
+  "no-atoms",
+  "no-effects",
+]</pre>
+    </div>
+  </div>
+  <div class="callout">The stub does not duplicate the whole rule. It makes the local architecture discoverable.</div>
+  <div class="page-num">10</div>
+  <div class="footer-mark">Agentic Codebase</div>
+</section>
+
+<section class="slide">
+  <div class="slide-head"><span class="eyebrow">10 · Demo Path</span></div>
+  <div class="slide-title">The internal flow dashboard connects all three forces</div>
+  <div class="body-grid">
+    <div>
+      <ul class="pts">
+        <li>Filter by <span class="hl">intent</span>, then open one intent detail.</li>
+        <li>Show emitted <span class="hl">events</span> and queued/completed <span class="hl">reactions</span>.</li>
+        <li>Jump to <span class="hl">CreateTaskIntent -&gt; TaskCreated -&gt; TaskCreatedLog</span>.</li>
+        <li>Jump to dashboard machine events.</li>
+        <li>End at <span class="hl">modules.ui.md</span> and <span class="hl">modules.ui.lint.ts</span>.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>The demo script</h3>
+      <p>One screen shows the backend runtime. One machine shows the frontend protocol. One markdown/lint pair shows how the architecture teaches the next agent.</p>
+    </div>
+  </div>
+  <div class="page-num">11</div>
+  <div class="footer-mark">Agentic Codebase</div>
+</section>
+
+<section class="slide ending">
+  <h1>Make intent explicit</h1>
+  <div class="line"></div>
+  <div class="sub">An agentic codebase makes requests typed, effects observable, UI behavior modeled, and architectural drift mechanically visible.</div>
+  <div class="page-num">12</div>
+  <div class="footer-mark">Agentic Codebase</div>
+</section>
+
+</body>
+</html>
