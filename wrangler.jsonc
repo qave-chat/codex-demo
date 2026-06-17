@@ -1,0 +1,10 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "codex-demo",
+  "account_id": "8abcf4587973debad0b21bc8fdb65944",
+  "compatibility_date": "2026-06-17",
+  "assets": {
+    "directory": "./dist",
+    "not_found_handling": "single-page-application"
+  }
+}
