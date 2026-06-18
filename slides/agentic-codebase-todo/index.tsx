@@ -394,7 +394,7 @@ const Close: Page = () => (
 );
 
 export const meta: SlideMeta = {
-  title: "Building an Agentic Codebase",
+  title: "building an agentic codebase",
   theme: "qave",
 };
 
