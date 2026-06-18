@@ -10,6 +10,9 @@ export class FlowRuntime extends Context.Service<FlowRuntime>()(
       const db = yield* Database;
       const registry = yield* FlowRegistry;
       return {
+        register: Effect.fn("register")(function* (input) {
+          yield* registry.register(input);
+        }),
         submitIntent: Effect.fn("submitIntent")(function* (input) {
           const intentId = generateId("intent");
           yield* db.insert(intents).values({

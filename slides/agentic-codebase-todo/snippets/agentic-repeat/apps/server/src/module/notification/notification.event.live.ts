@@ -1,3 +1,4 @@
+import { Effect } from "effect";
 import { eq } from "drizzle-orm";
 import { notifications } from "@/platform/db/schema/notification-table";
 import { Event } from "@/platform/flow/flow";
@@ -56,3 +57,9 @@ export const NotificationDeliveredLive = Event.layer(
       .where(eq(notifications.id, event.payload.notificationId));
   }),
 );
+
+export const NotificationEventLayers = [
+  NotificationCreatedLive,
+  NotificationFailedLive,
+  NotificationDeliveredLive,
+] as const;

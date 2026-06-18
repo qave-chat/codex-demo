@@ -51,3 +51,9 @@ export const ScheduleTodoRecurrenceLive = Intent.layer(
     ];
   }),
 );
+
+export const TodoIntentLayers = [
+  CreateTodoLive,
+  ShareTodoLive,
+  ScheduleTodoRecurrenceLive,
+] as const;

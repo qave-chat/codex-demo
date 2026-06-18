@@ -36,3 +36,5 @@ export const DeliverNotificationLive = Reaction.layer(
     ];
   }),
 );
+
+export const NotificationReactionLayers = [DeliverNotificationLive] as const;

@@ -21,3 +21,5 @@ export const TodoCreatedLive = Event.layer(
       .onConflictDoNothing();
   }),
 );
+
+export const TodoEventLayers = [TodoCreatedLive] as const;

@@ -383,7 +383,7 @@ const AgenticShare: Page = () => (
 const AgenticRepeat: Page = () => (
   <Shell eyebrow="agentic 3" title="Recurrence preserves reaction outcomes">
     <SlideSandpack
-      activeFile="/apps/server/src/module/todo-occurrence/todo-occurrence.reaction.live.ts"
+      activeFile="/apps/server/src/module/todo/todo.module.layer.ts"
       files={agenticRepeatFiles}
     />
   </Shell>

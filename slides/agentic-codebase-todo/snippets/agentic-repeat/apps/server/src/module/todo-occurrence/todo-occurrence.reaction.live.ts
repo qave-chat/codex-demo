@@ -1,3 +1,4 @@
+import { Effect } from "effect";
 import { TodoCreated, TodoRecurrenceScheduled } from "@/module/todo/todo.event.define";
 import { Reaction } from "@/platform/flow/flow";
 import { GenerateTodoOccurrence } from "./todo-occurrence.reaction.define";
@@ -21,3 +22,5 @@ export const GenerateTodoOccurrenceLive = Reaction.layer(
     ];
   }),
 );
+
+export const TodoOccurrenceReactionLayers = [GenerateTodoOccurrenceLive] as const;
