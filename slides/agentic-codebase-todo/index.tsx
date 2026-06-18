@@ -328,7 +328,7 @@ const Statement = ({ title }: { title: string }) => (
 );
 
 const Cover: Page = () => (
-  <Statement title="codebase, complexity and correctness" />
+  <Statement title="agentic codebase with codex" />
 );
 
 const NormalCreate: Page = () => (
